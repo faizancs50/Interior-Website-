@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import projectRoutes from './routes/projects.js';
 import uploadRoutes from './routes/upload.js';
+import enquiryRoutes from './routes/enquiries.js';
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use('/uploads', express.static(uploadsPath));
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/enquiries', enquiryRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

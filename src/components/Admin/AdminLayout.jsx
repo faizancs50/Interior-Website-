@@ -4,6 +4,7 @@ import {
   LayoutDashboard,
   FolderKanban,
   PlusCircle,
+  Inbox,
   ExternalLink,
   LogOut,
   Sun,
@@ -30,7 +31,8 @@ const AdminLayout = () => {
   const navItems = [
     { label: 'Dashboard', path: '/admin', icon: LayoutDashboard, end: true },
     { label: 'All Projects', path: '/admin/projects', icon: FolderKanban },
-    { label: 'Add Project', path: '/admin/projects/new', icon: PlusCircle }
+    { label: 'Add Project', path: '/admin/projects/new', icon: PlusCircle },
+    { label: 'Enquiries & Sheets', path: '/admin/enquiries', icon: Inbox }
   ];
 
   return (

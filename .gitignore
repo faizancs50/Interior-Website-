@@ -19,6 +19,8 @@ build/
 *.cert
 *.crt
 credentials.json
+*credentials*.json
+*service-account*.json
 
 # Temporary database files
 *.tmp

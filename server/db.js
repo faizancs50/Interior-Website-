@@ -237,6 +237,12 @@ class Database {
       this.data.projects = initialProjects;
       this.save();
     }
+
+    // Ensure enquiries collection exists
+    if (!Array.isArray(this.data.enquiries)) {
+      this.data.enquiries = [];
+      this.save();
+    }
   }
 
   ensureAdminUsers() {
@@ -438,6 +444,55 @@ class Database {
     return this.updateProject(id, { featured: !project.featured });
   }
 
+  // --- Enquiry Methods ---
+  createEnquiry(enquiryData) {
+    const now = new Date();
+    const id = `enq_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const newEnquiry = {
+      id,
+      name: enquiryData.name ? enquiryData.name.trim() : '',
+      phone: enquiryData.phone ? enquiryData.phone.trim() : '',
+      email: enquiryData.email ? enquiryData.email.trim().toLowerCase() : '',
+      projectType: enquiryData.projectType || 'Architecture',
+      location: enquiryData.location ? enquiryData.location.trim() : 'Singapore',
+      budget: enquiryData.budget ? enquiryData.budget.trim() : 'Not specified',
+      message: enquiryData.message ? enquiryData.message.trim() : '',
+      submittedAt: enquiryData.submittedAt || now.toISOString(),
+      submittedAtFormatted:
+        enquiryData.submittedAtFormatted ||
+        now.toLocaleString('en-SG', {
+          timeZone: 'Asia/Singapore',
+          dateStyle: 'medium',
+          timeStyle: 'medium'
+        }),
+      status: enquiryData.status || 'New',
+      googleSheetsSynced: Boolean(enquiryData.googleSheetsSynced),
+      googleSheetsError: enquiryData.googleSheetsError || null,
+      createdAt: now.toISOString()
+    };
+
+    if (!Array.isArray(this.data.enquiries)) {
+      this.data.enquiries = [];
+    }
+
+    this.data.enquiries.unshift(newEnquiry);
+    this.save();
+    return newEnquiry;
+  }
+
+  updateEnquiry(id, updates) {
+    if (!Array.isArray(this.data.enquiries)) return null;
+    const index = this.data.enquiries.findIndex((e) => e.id === id);
+    if (index === -1) return null;
+    this.data.enquiries[index] = { ...this.data.enquiries[index], ...updates };
+    this.save();
+    return this.data.enquiries[index];
+  }
+
+  getAllEnquiries() {
+    return (this.data.enquiries || []).slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  }
+
   getAdminStats() {
     const projects = this.data.projects || [];
     const total = projects.length;
@@ -449,7 +504,11 @@ class Database {
       .sort((a, b) => new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt))
       .slice(0, 5);
 
-    return { total, published, draft, featured, recent };
+    const enquiries = this.data.enquiries || [];
+    const enquiriesTotal = enquiries.length;
+    const enquiriesRecent = enquiries.slice(0, 5);
+
+    return { total, published, draft, featured, recent, enquiriesTotal, enquiriesRecent };
   }
 }
 

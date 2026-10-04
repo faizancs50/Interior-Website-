@@ -19,6 +19,7 @@ import AdminLayout from './components/Admin/AdminLayout';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import AdminProjects from './pages/Admin/AdminProjects';
 import AdminProjectForm from './pages/Admin/AdminProjectForm';
+import AdminEnquiries from './pages/Admin/AdminEnquiries';
 import ProtectedRoute from './components/Admin/ProtectedRoute';
 
 // Scroll to top helper on route change
@@ -72,6 +73,7 @@ function App() {
               <Route path="projects" element={<AdminProjects />} />
               <Route path="projects/new" element={<AdminProjectForm />} />
               <Route path="projects/edit/:id" element={<AdminProjectForm />} />
+              <Route path="enquiries" element={<AdminEnquiries />} />
             </Route>
 
             {/* Catch-all 404 for admin */}

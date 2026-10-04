@@ -1,5 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, ArrowRight } from 'lucide-react';
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  Send,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  ArrowRight
+} from 'lucide-react';
 import { pageEnter } from '../animations/pageTransitions';
 import './Contact.css';
 
@@ -10,13 +20,17 @@ const Contact = () => {
     name: '',
     email: '',
     phone: '',
-    projectType: 'HDB BTO',
+    projectType: 'Architecture',
+    location: '',
+    budget: '',
     message: ''
   });
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [serverError, setServerError] = useState(null);
+  const [submittedInfo, setSubmittedInfo] = useState(null);
 
   useEffect(() => {
     pageEnter(pageRef.current);
@@ -24,18 +38,31 @@ const Contact = () => {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = 'Please provide your full name.';
+
+    if (!formData.name.trim() || formData.name.trim().length < 2) {
+      newErrors.name = 'Please provide your full name (at least 2 characters).';
+    }
+
     if (!formData.email.trim()) {
       newErrors.email = 'Please provide your email address.';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address.';
     }
+
     if (!formData.phone.trim()) {
       newErrors.phone = 'Please provide your contact number.';
-    } else if (!/^[0-9+() -]{7,15}$/.test(formData.phone)) {
-      newErrors.phone = 'Please enter a valid phone number.';
+    } else if (!/^[0-9+() -]{7,20}$/.test(formData.phone)) {
+      newErrors.phone = 'Please enter a valid phone number (minimum 7 digits).';
     }
-    if (!formData.message.trim()) newErrors.message = 'Please share a brief note about your project.';
+
+    if (!formData.location.trim() || formData.location.trim().length < 2) {
+      newErrors.location = 'Please provide your project location or district.';
+    }
+
+    if (!formData.message.trim() || formData.message.trim().length < 5) {
+      newErrors.message = 'Please share a brief note about your project (at least 5 characters).';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -46,18 +73,59 @@ const Contact = () => {
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: null }));
     }
+    if (serverError) {
+      setServerError(null);
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return; // Prevent double-clicking / rapid duplicate submission
+
     if (!validate()) return;
 
     setIsSubmitting(true);
-    // Simulate frontend submission
-    setTimeout(() => {
+    setServerError(null);
+
+    try {
+      const response = await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok && data.success) {
+        setSubmittedInfo({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          projectType: formData.projectType,
+          location: formData.location,
+          budget: formData.budget || 'Not specified',
+          reference: data.enquiryId
+            ? `#${data.enquiryId.slice(-6).toUpperCase()}`
+            : `#${Math.floor(100000 + Math.random() * 900000)}`,
+          message: data.message || 'Thank you! Your enquiry has been received. Our team will contact you shortly.'
+        });
+        setIsSubmitted(true);
+      } else {
+        // Handle server error gracefully (Google Sheets failure, validation, rate-limiting)
+        setServerError(
+          data.message ||
+            'We were unable to record your enquiry into our scheduling system at this time. Please try again shortly or contact us directly at enquiry@carpenters.com.sg.'
+        );
+      }
+    } catch (err) {
+      setServerError(
+        'A network connection error occurred while submitting your enquiry. Please check your connection and try again.'
+      );
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 1000);
+    }
   };
 
   const resetForm = () => {
@@ -65,9 +133,14 @@ const Contact = () => {
       name: '',
       email: '',
       phone: '',
-      projectType: 'HDB BTO',
+      projectType: 'Architecture',
+      location: '',
+      budget: '',
       message: ''
     });
+    setErrors({});
+    setServerError(null);
+    setSubmittedInfo(null);
     setIsSubmitted(false);
   };
 
@@ -80,7 +153,7 @@ const Contact = () => {
           <h1 className="contact-title">Let's Discuss Your Space.</h1>
           <p className="contact-lead">
             Whether you are receiving keys to a new home or re-imagining a heritage residence,
-            our senior interior designers are at your service.
+            our senior architects and interior designers are at your service.
           </p>
         </div>
       </section>
@@ -147,13 +220,17 @@ const Contact = () => {
                   </div>
                   <h3 className="success-title">Message Received With Gratitude</h3>
                   <p className="success-desc">
-                    Thank you, <strong>{formData.name}</strong>. One of our design architects
-                    will review your project brief and contact you within 24 business hours.
+                    Thank you! Your enquiry has been received. Our team will contact you shortly.
                   </p>
                   <div className="success-details">
-                    <p>Reference: #{Math.floor(100000 + Math.random() * 900000)}</p>
-                    <p>Project Type: {formData.projectType}</p>
-                    <p>Contact: {formData.email}</p>
+                    <p>Reference: <strong>{submittedInfo?.reference}</strong></p>
+                    <p>Client: <strong>{submittedInfo?.name}</strong></p>
+                    <p>Project Type: <strong>{submittedInfo?.projectType}</strong></p>
+                    <p>Location: <strong>{submittedInfo?.location}</strong></p>
+                    <p>Contact: <strong>{submittedInfo?.email} • {submittedInfo?.phone}</strong></p>
+                    {submittedInfo?.budget && submittedInfo?.budget !== 'Not specified' && (
+                      <p>Estimated Budget: <strong>{submittedInfo?.budget}</strong></p>
+                    )}
                   </div>
                   <button onClick={resetForm} className="btn btn-outline success-reset-btn">
                     <span>Send Another Inquiry</span>
@@ -161,10 +238,18 @@ const Contact = () => {
                 </div>
               ) : (
                 <form className="contact-form" onSubmit={handleSubmit} noValidate>
-                  <h3 className="form-heading">Send An Inquiry</h3>
+                  <h3 className="form-heading">Send An Enquiry</h3>
                   <p className="form-sub">
-                    Fill in your project requirements below to schedule a discussion.
+                    Fill in your project requirements below to schedule an architectural consultation.
                   </p>
+
+                  {/* Server error alert banner if submission fails */}
+                  {serverError && (
+                    <div className="form-server-error" role="alert">
+                      <AlertCircle size={20} className="form-server-error-icon" />
+                      <div>{serverError}</div>
+                    </div>
+                  )}
 
                   {/* Name field */}
                   <div className="form-group">
@@ -221,7 +306,7 @@ const Contact = () => {
                   {/* Project Type */}
                   <div className="form-group">
                     <label htmlFor="projectType" className="form-label">
-                      Property / Project Type
+                      Project Type <span className="req">*</span>
                     </label>
                     <select
                       id="projectType"
@@ -230,19 +315,57 @@ const Contact = () => {
                       onChange={handleChange}
                       className="form-select"
                     >
-                      <option value="HDB BTO">HDB BTO Flat</option>
-                      <option value="HDB Resale">HDB Resale Flat</option>
-                      <option value="Private Condominium">Private Condominium</option>
-                      <option value="Landed Residence">Landed Residence (Terrace / Semi-D / Bungalow)</option>
-                      <option value="Commercial / Office">Commercial Interior / Office</option>
-                      <option value="Custom Carpentry Only">Custom Carpentry Fabrication Only</option>
+                      <option value="Architecture">Architecture</option>
+                      <option value="Interior Design">Interior Design</option>
+                      <option value="Residential">Residential (HDB / Condo / Landed)</option>
+                      <option value="Commercial">Commercial (Office / Retail / F&B)</option>
+                      <option value="Other">Other / Bespoke Consultation</option>
                     </select>
+                  </div>
+
+                  {/* Location & Budget */}
+                  <div className="form-row-2">
+                    <div className="form-group">
+                      <label htmlFor="location" className="form-label">
+                        Location / District <span className="req">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="location"
+                        name="location"
+                        value={formData.location}
+                        onChange={handleChange}
+                        placeholder="e.g. Marina Bay, Orchard, Bukit Timah"
+                        className={`form-input ${errors.location ? 'has-error' : ''}`}
+                      />
+                      {errors.location && <span className="form-error">{errors.location}</span>}
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="budget" className="form-label">
+                        Estimated Budget (Optional)
+                      </label>
+                      <select
+                        id="budget"
+                        name="budget"
+                        value={formData.budget}
+                        onChange={handleChange}
+                        className="form-select"
+                      >
+                        <option value="">Select budget range (Optional)</option>
+                        <option value="Below $50,000">Below $50,000</option>
+                        <option value="$50,000 – $100,000">$50,000 – $100,000</option>
+                        <option value="$100,000 – $200,000">$100,000 – $200,000</option>
+                        <option value="$200,000 – $350,000">$200,000 – $350,000</option>
+                        <option value="$350,000+">$350,000 and above (Landed / Luxury)</option>
+                      </select>
+                    </div>
                   </div>
 
                   {/* Message */}
                   <div className="form-group">
                     <label htmlFor="message" className="form-label">
-                      Message &amp; Spatial Brief <span className="req">*</span>
+                      Message / Project Details <span className="req">*</span>
                     </label>
                     <textarea
                       id="message"
@@ -250,7 +373,7 @@ const Contact = () => {
                       rows="4"
                       value={formData.message}
                       onChange={handleChange}
-                      placeholder="Share details about key collection date, aesthetic preferences (e.g. Japandi, Minimalist), or specific hacking requirements..."
+                      placeholder="Share details about key collection date, aesthetic preferences (e.g. Japandi, Modern Minimalist), or specific architectural requirements..."
                       className={`form-textarea ${errors.message ? 'has-error' : ''}`}
                     />
                     {errors.message && <span className="form-error">{errors.message}</span>}
@@ -262,7 +385,10 @@ const Contact = () => {
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
-                      <span>Sending Your Details...</span>
+                      <>
+                        <Loader2 size={16} className="submit-spinner" />
+                        <span>Sending Your Enquiry...</span>
+                      </>
                     ) : (
                       <>
                         <span>Submit Project Brief</span>

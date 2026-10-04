@@ -8,7 +8,8 @@ import {
   Sparkles,
   ArrowRight,
   ShieldCheck,
-  Clock
+  Clock,
+  AlertCircle
 } from 'lucide-react';
 import { pageEnter } from '../animations/pageTransitions';
 import './Consultation.css';
@@ -35,6 +36,7 @@ const Consultation = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isBooked, setIsBooked] = useState(false);
   const [bookingRef, setBookingRef] = useState('');
+  const [serverError, setServerError] = useState(null);
 
   useEffect(() => {
     pageEnter(pageRef.current);
@@ -69,6 +71,9 @@ const Consultation = () => {
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: null }));
     }
+    if (serverError) {
+      setServerError(null);
+    }
   };
 
   const handleFileUpload = (e) => {
@@ -78,20 +83,55 @@ const Consultation = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
     if (!validate()) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
+    setServerError(null);
+
+    try {
+      const response = await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          projectType: `Architecture (${formData.propertyType})`,
+          location: 'Singapore',
+          budget: formData.budget,
+          message: `[Preferred Date: ${formData.consultationDate}, Style: ${formData.designStyle}${formData.floorPlanName ? `, FloorPlan: ${formData.floorPlanName}` : ''}] ${formData.message || 'Discovery Consultation Request'}`
+        })
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (response.ok && data.success) {
+        setBookingRef(
+          data.enquiryId
+            ? `#CR-2026-${data.enquiryId.slice(-4).toUpperCase()}`
+            : `CR-2026-${Math.floor(1000 + Math.random() * 9000)}`
+        );
+        setIsBooked(true);
+      } else {
+        setServerError(
+          data.message ||
+            'We were unable to record your consultation request into our scheduling system at this time. Please try again or reach out to enquiry@carpenters.com.sg.'
+        );
+      }
+    } catch (err) {
+      setServerError('A network error occurred while submitting your consultation request. Please check your connection.');
+    } finally {
       setIsSubmitting(false);
-      setBookingRef(`CR-2026-${Math.floor(1000 + Math.random() * 9000)}`);
-      setIsBooked(true);
-    }, 1100);
+    }
   };
 
   const handleReset = () => {
     setIsBooked(false);
+    setServerError(null);
     setFormData((prev) => ({
       ...prev,
       name: '',
@@ -189,6 +229,13 @@ const Consultation = () => {
                       All consultations are strictly 1-on-1 with a senior design lead.
                     </p>
                   </div>
+
+                  {serverError && (
+                    <div className="form-server-error" role="alert" style={{ marginBottom: '1.5rem' }}>
+                      <AlertCircle size={20} className="form-server-error-icon" />
+                      <div>{serverError}</div>
+                    </div>
+                  )}
 
                   {/* Name, Email, Phone */}
                   <div className="consult-form-grid">
