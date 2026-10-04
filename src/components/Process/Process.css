@@ -1,0 +1,209 @@
+/* Process Section Styles */
+.process-section {
+  padding: clamp(5.5rem, 9vw, 9rem) 0;
+  background-color: var(--color-bg);
+  position: relative;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.process-timeline-container {
+  position: relative;
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+/* Horizontal Progress Line on Desktop */
+.process-progress-track {
+  position: absolute;
+  top: 24px;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background-color: var(--border-light);
+  z-index: 1;
+}
+
+.process-progress-fill {
+  height: 100%;
+  background-color: var(--color-accent);
+  transition: width 0.5s ease;
+}
+
+.process-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(1.2rem, 2vw, 2rem);
+  position: relative;
+  z-index: 2;
+}
+
+.process-step-item {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.step-marker-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.step-marker-node {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--color-light);
+  border: 2px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.step-num-text {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  transition: color 0.3s ease;
+}
+
+.step-content-card {
+  background-color: var(--color-light);
+  border: 1px solid var(--border-light);
+  padding: 1.8rem 1.4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.step-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  background-color: var(--color-bg);
+  color: var(--color-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.step-title-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-dark);
+}
+
+.step-subtitle {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.25;
+  margin-bottom: 0.85rem;
+  color: var(--color-dark);
+}
+
+.step-body-desc {
+  font-size: 0.92rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.step-deliverable-box {
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.deliverable-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+}
+
+.deliverable-val {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-dark);
+  line-height: 1.4;
+}
+
+/* Active & Past Step States */
+.process-step-item.active .step-marker-node {
+  background-color: var(--color-dark);
+  border-color: var(--color-accent);
+  transform: scale(1.15);
+  box-shadow: 0 8px 24px rgba(23, 23, 23, 0.2);
+}
+
+.process-step-item.active .step-num-text {
+  color: var(--color-light);
+}
+
+.process-step-item.active .step-content-card {
+  border-color: var(--color-accent);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
+  transform: translateY(-4px);
+}
+
+.process-step-item.active .step-icon-box {
+  background-color: var(--color-accent);
+  color: var(--color-light);
+}
+
+.process-step-item.past .step-marker-node {
+  border-color: var(--color-accent);
+}
+
+.process-step-item.past .step-num-text {
+  color: var(--color-accent);
+}
+
+/* ==========================================================================
+   Responsive: Mobile Vertical Timeline
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .process-progress-track {
+    display: none;
+  }
+  
+  .process-steps-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .process-step-item {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+  
+  .step-marker-wrap {
+    margin-bottom: 0;
+    padding-top: 0.5rem;
+  }
+  
+  .step-marker-node {
+    width: 42px;
+    height: 42px;
+  }
+}

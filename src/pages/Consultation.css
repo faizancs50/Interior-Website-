@@ -1,0 +1,402 @@
+/* Consultation Page Styles */
+.page-consultation {
+  padding-top: var(--header-height);
+  background-color: var(--color-bg);
+}
+
+.consultation-hero {
+  padding: clamp(5rem, 8vw, 8rem) 0 3.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.consultation-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 1.05;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.consultation-lead {
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  color: var(--color-muted);
+  max-width: 760px;
+  line-height: 1.7;
+}
+
+/* Layout */
+.consultation-section {
+  padding: clamp(4.5rem, 8vw, 8rem) 0;
+}
+
+.consultation-layout {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: clamp(3.5rem, 6vw, 6.5rem);
+  align-items: flex-start;
+}
+
+/* Form Card */
+.consultation-form-card {
+  background-color: var(--color-light);
+  border: 1px solid var(--border-light);
+  padding: clamp(2.5rem, 5vw, 4.5rem);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.03);
+}
+
+.form-section-title-wrap {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.form-section-heading {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.form-section-sub {
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
+.consultation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.consult-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.consult-form-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+/* Property Pills */
+.property-pills-row {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+
+.prop-pill {
+  padding: 0.65rem 1.4rem;
+  border: 1px solid var(--border-light);
+  background-color: var(--color-bg);
+  color: var(--color-dark);
+  font-size: 0.86rem;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.prop-pill:hover {
+  border-color: var(--color-accent);
+}
+
+.prop-pill.active {
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  border-color: var(--color-dark);
+}
+
+/* Dropzone */
+.floor-plan-dropzone {
+  position: relative;
+  width: 100%;
+}
+
+.dropzone-file-input {
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.dropzone-label {
+  display: block;
+  border: 1.5px dashed var(--border-accent);
+  background-color: var(--color-bg);
+  padding: 2.2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dropzone-label:hover {
+  background-color: #EEEAE3;
+  border-color: var(--color-accent-dark);
+}
+
+.dropzone-empty,
+.dropzone-file-selected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dropzone-icon {
+  color: var(--color-accent);
+  margin-bottom: 0.25rem;
+}
+
+.dropzone-check-icon {
+  color: #3B7A57;
+  margin-bottom: 0.25rem;
+}
+
+.dropzone-main-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-dark);
+}
+
+.dropzone-filename {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.dropzone-hint {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
+
+.consult-submit-btn {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 0.92rem;
+  margin-top: 1rem;
+}
+
+/* Sidebar */
+.consultation-sidebar {
+  position: sticky;
+  top: 110px;
+}
+
+.sidebar-card {
+  background-color: var(--color-light);
+  border: 1px solid var(--border-light);
+  padding: clamp(2rem, 3.5vw, 3rem);
+}
+
+.sidebar-eyebrow {
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-title {
+  font-family: var(--font-display);
+  font-size: 1.95rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.expect-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.expect-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.expect-num {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--color-accent);
+  font-weight: 600;
+  padding-top: 1px;
+}
+
+.expect-item-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 0.35rem;
+  color: var(--color-dark);
+}
+
+.expect-item-desc {
+  font-size: 0.88rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.sidebar-trust-box {
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.trust-icon {
+  color: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.trust-title {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--color-dark);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.trust-sub {
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+/* Success View */
+.consultation-success-view {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.booking-badge-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(165, 150, 130, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.booking-check {
+  color: var(--color-accent-dark);
+}
+
+.booking-ref-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.5rem;
+}
+
+.booking-confirm-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 2.6rem);
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+}
+
+.booking-confirm-text {
+  font-size: 1.05rem;
+  color: var(--color-muted);
+  max-width: 580px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+
+.booking-summary-box {
+  background-color: var(--color-bg);
+  border: 1px solid var(--border-light);
+  padding: 1.75rem 2.25rem;
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 2.5rem;
+  text-align: left;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.92rem;
+  border-bottom: 1px solid rgba(23, 23, 23, 0.05);
+  padding-bottom: 0.5rem;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.summary-lbl {
+  color: var(--color-muted);
+  font-size: 0.84rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.summary-val {
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.booking-action-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .consultation-layout {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+  
+  .consultation-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .consult-form-grid,
+  .consult-form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  
+  .consultation-form-card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .booking-action-row {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .booking-action-row .btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,205 @@
+/* Portfolio Section Styles */
+.portfolio-section {
+  padding: clamp(5.5rem, 9vw, 9rem) 0;
+  background-color: var(--color-bg);
+  position: relative;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.portfolio-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2.5rem;
+  margin-bottom: clamp(3.5rem, 6vw, 5rem);
+}
+
+.portfolio-header-content {
+  max-width: 680px;
+}
+
+.portfolio-header-lead {
+  font-size: 1.15rem;
+  color: var(--color-muted);
+  line-height: 1.7;
+  margin-top: 1rem;
+}
+
+/* Editorial Asymmetric Grid */
+.portfolio-editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(2rem, 3.5vw, 3.5rem);
+  margin-bottom: 3.5rem;
+}
+
+.portfolio-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-light);
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.05);
+  border-color: var(--color-accent);
+}
+
+/* Grid Spans for Editorial Rhythm */
+.portfolio-card.card-wide {
+  grid-column: span 7;
+}
+
+.portfolio-card.card-standard {
+  grid-column: span 5;
+}
+
+.portfolio-media-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background-color: #DFDAD1;
+}
+
+.portfolio-card.card-wide .portfolio-media-wrapper {
+  aspect-ratio: 16 / 9;
+}
+
+.portfolio-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portfolio-card:hover .portfolio-card-img {
+  transform: scale(1.08);
+}
+
+.portfolio-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.5) 100%);
+  opacity: 0.3;
+  transition: opacity 0.4s ease;
+}
+
+.portfolio-card:hover .portfolio-card-overlay {
+  opacity: 0.6;
+}
+
+.portfolio-pill {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  padding: 0.35rem 0.85rem;
+  background-color: rgba(23, 23, 23, 0.8);
+  backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  z-index: 5;
+}
+
+.portfolio-action-circle {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  color: var(--color-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.portfolio-card:hover .portfolio-action-circle {
+  background-color: var(--color-accent);
+  color: #FFFFFF;
+  transform: rotate(45deg);
+}
+
+.portfolio-card-body {
+  padding: 2.25rem 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.portfolio-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.65rem;
+}
+
+.portfolio-dot {
+  opacity: 0.5;
+}
+
+.portfolio-card-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.2vw, 2.1rem);
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 0.85rem;
+}
+
+.portfolio-title-link {
+  color: var(--color-dark);
+  transition: color 0.2s ease;
+}
+
+.portfolio-card:hover .portfolio-title-link {
+  color: var(--color-accent-dark);
+}
+
+.portfolio-card-desc {
+  font-size: 0.96rem;
+  color: var(--color-muted);
+  line-height: 1.65;
+}
+
+.portfolio-bottom-action {
+  display: none;
+  justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .portfolio-card.card-wide,
+  .portfolio-card.card-standard {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-header-cta {
+    display: none;
+  }
+  
+  .portfolio-bottom-action {
+    display: flex;
+  }
+  
+  .portfolio-card-body {
+    padding: 1.75rem 1.5rem 2rem;
+  }
+}
