@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight, Sun, Moon } from 'lucide-react';
 import gsap from 'gsap';
+import { useTheme } from '../../context/ThemeContext';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme, isDark } = useTheme();
   const location = useLocation();
   const mobileMenuRef = useRef(null);
   const menuLinksRef = useRef([]);
@@ -170,8 +172,19 @@ const Navbar = () => {
             ))}
           </nav>
 
-          {/* Desktop Consultation Action */}
+          {/* Desktop Consultation Action & Theme Toggle */}
           <div className="navbar-actions">
+            {/* Theme Toggle Button */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="theme-toggle-btn"
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {isDark ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+
             <Link
               to="/consultation"
               className={`btn navbar-cta ${
@@ -273,6 +286,20 @@ const Navbar = () => {
             ref={(el) => (menuLinksRef.current[navLinks.length + 2] = el)}
             className="mobile-menu-footer"
           >
+            <div className="mobile-theme-row">
+              <span className="mobile-theme-label">
+                Appearance: {isDark ? 'Dark Mode' : 'Light Mode'}
+              </span>
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="theme-toggle-btn"
+                aria-label="Toggle theme"
+              >
+                {isDark ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
+            </div>
+
             <Link
               to="/consultation"
               className="btn btn-accent mobile-cta-btn"

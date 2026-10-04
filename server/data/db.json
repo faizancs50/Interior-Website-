@@ -1,0 +1,212 @@
+{
+  "users": [
+    {
+      "id": "admin-owner",
+      "name": "Website Owner / Client",
+      "email": "owner@carpenters.com.sg",
+      "passwordHash": "$2b$10$.5jwNiS0WqWnU9hXtkto9OkoYnz5mVy6Dt1ZrlJfRRgTiEGafwZKy",
+      "role": "admin",
+      "title": "Managing Director & Client Lead",
+      "createdAt": "2026-10-04T10:11:12.717Z"
+    },
+    {
+      "id": "admin-dev",
+      "name": "Website Developer",
+      "email": "developer@carpenters.com.sg",
+      "passwordHash": "$2b$10$4nHp8OA.Rm4pwltsk1oOb.NuU0LllTVjOwHbYnXaB2AuYLjw.zCkG",
+      "role": "admin",
+      "title": "Lead Architect & Fullstack Engineer",
+      "createdAt": "2026-10-04T10:11:12.787Z"
+    }
+  ],
+  "projects": [
+    {
+      "id": "modern-minimal-residence",
+      "title": "Modern Minimal Residence",
+      "slug": "modern-minimal-residence",
+      "category": "Condo",
+      "location": "Marina One Residences",
+      "propertyType": "3-Bedroom Luxury Apartment",
+      "style": "Modern Minimalist",
+      "coverImage": "/images/portfolio/project-1.webp",
+      "galleryImages": [
+        "/images/portfolio/project-1.webp",
+        "/images/residences/condo-1.webp",
+        "/images/hero/hero-2.webp"
+      ],
+      "year": "2025",
+      "area": "1,540 sqft",
+      "shortDescription": "A serene urban retreat characterized by continuous microcement textures and monolithic travertine accents.",
+      "description": "A serene urban retreat characterized by continuous microcement textures, concealed architectural doors, and monolithic travertine accents. Designed for seamless everyday comfort with bespoke concealed storage and ambient cove lighting.",
+      "client": "Private Owner",
+      "featured": true,
+      "status": "published",
+      "createdAt": "2025-01-15T08:00:00.000Z",
+      "updatedAt": "2025-01-15T08:00:00.000Z"
+    },
+    {
+      "id": "contemporary-family-home",
+      "title": "Contemporary Family Home",
+      "slug": "contemporary-family-home",
+      "category": "Landed",
+      "location": "Bukit Timah Estate",
+      "propertyType": "Semi-Detached Landed House",
+      "style": "Contemporary Architectural",
+      "coverImage": "/images/portfolio/project-2.webp",
+      "galleryImages": [
+        "/images/portfolio/project-2.webp",
+        "/images/residences/landed-1.webp",
+        "/images/services/landed.webp"
+      ],
+      "year": "2025",
+      "area": "4,200 sqft",
+      "shortDescription": "Generous multi-generational spatial planning integrating double-volume lightwells and custom walnut millwork.",
+      "description": "Generous multi-generational spatial planning integrating double-volume lightwells, custom walnut millwork, and private landscaped courtyard views. Every floor features customized joinery engineered in our direct Singapore factory.",
+      "client": "The Tan Family",
+      "featured": true,
+      "status": "published",
+      "createdAt": "2025-02-10T09:30:00.000Z",
+      "updatedAt": "2025-02-10T09:30:00.000Z"
+    },
+    {
+      "id": "warm-japandi-interior",
+      "title": "Warm Japandi Interior",
+      "slug": "warm-japandi-interior",
+      "category": "HDB",
+      "location": "Tampines GreenVerdant",
+      "propertyType": "5-Room BTO Flat",
+      "style": "Japandi & Wabi-Sabi",
+      "coverImage": "/images/portfolio/project-3.webp",
+      "galleryImages": [
+        "/images/portfolio/project-3.webp",
+        "/images/residences/hdb-1.webp",
+        "/images/services/hdb.webp"
+      ],
+      "year": "2024",
+      "area": "1,216 sqft",
+      "shortDescription": "Harmonious interplay of pale oak, natural lime-wash wall finishes, and tatami-inspired platform storage.",
+      "description": "Harmonious interplay of pale oak, natural lime-wash wall finishes, tatami-inspired platform storage, and gentle ambient cove lighting. Complete spatial reconfiguration transforming standard BTO compartments into an expansive open gallery.",
+      "client": "Marcus & Cheryl",
+      "featured": true,
+      "status": "published",
+      "createdAt": "2024-11-20T10:15:00.000Z",
+      "updatedAt": "2024-11-20T10:15:00.000Z"
+    },
+    {
+      "id": "luxury-urban-residence",
+      "title": "Luxury Urban Residence",
+      "slug": "luxury-urban-residence",
+      "category": "Condo",
+      "location": "The Nassim",
+      "propertyType": "4-Bedroom Penthouse",
+      "style": "Quiet Luxury",
+      "coverImage": "/images/portfolio/project-4.webp",
+      "galleryImages": [
+        "/images/portfolio/project-4.webp",
+        "/images/services/condo.webp",
+        "/images/hero/hero-1.webp"
+      ],
+      "year": "2024",
+      "area": "2,850 sqft",
+      "shortDescription": "Rich dark walnut finishes, bookmatched Italian Statuario marble, and temperature-controlled wine displays.",
+      "description": "Rich dark walnut finishes, bookmatched Italian Statuario marble, brushed bronze hardware, and temperature-controlled custom wine displays. Crafted with discreet luxury details and integrated smart-home automation.",
+      "client": "C-Suite Executive",
+      "featured": true,
+      "status": "published",
+      "createdAt": "2024-09-05T14:20:00.000Z",
+      "updatedAt": "2024-09-05T14:20:00.000Z"
+    },
+    {
+      "id": "refined-waterfront-penthouse",
+      "title": "Refined Waterfront Penthouse",
+      "slug": "refined-waterfront-penthouse",
+      "category": "Condo",
+      "location": "Corals at Keppel Bay",
+      "propertyType": "Duplex Penthouse",
+      "style": "Coastal Modern",
+      "coverImage": "/images/portfolio/project-5.webp",
+      "galleryImages": [
+        "/images/portfolio/project-5.webp",
+        "/images/services/condo.webp"
+      ],
+      "year": "2024",
+      "area": "3,100 sqft",
+      "shortDescription": "Sweeping sea views echoed through light travertine floors and organic curvature in ceiling coves.",
+      "description": "Sweeping sea views echoed through light travertine floors, organic curvature in ceiling coves, and bespoke floating cabinetry. Uncompromising materiality crafted to withstand coastal humidity.",
+      "client": "Private Collector",
+      "featured": false,
+      "status": "published",
+      "createdAt": "2024-08-12T11:00:00.000Z",
+      "updatedAt": "2024-08-12T11:00:00.000Z"
+    },
+    {
+      "id": "heritage-resale-reinvention",
+      "title": "Heritage Resale Reinvention",
+      "slug": "heritage-resale-reinvention",
+      "category": "HDB",
+      "location": "Tiong Bahru Estate",
+      "propertyType": "Executive Resale Flat",
+      "style": "Mid-Century Contemporary",
+      "coverImage": "/images/residences/hdb-1.webp",
+      "galleryImages": [
+        "/images/residences/hdb-1.webp",
+        "/images/portfolio/project-3.webp"
+      ],
+      "year": "2024",
+      "area": "1,380 sqft",
+      "shortDescription": "Full gut renovation merging compartmentalized rooms into a panoramic open-concept living gallery.",
+      "description": "Full gut renovation merging two compartmentalized rooms into a panoramic open-concept living gallery with restored terrazzo sensibilities and custom micro-fluted oak partitions.",
+      "client": "Design Director",
+      "featured": false,
+      "status": "published",
+      "createdAt": "2024-06-18T16:40:00.000Z",
+      "updatedAt": "2024-06-18T16:40:00.000Z"
+    },
+    {
+      "id": "atelier-commercial-loft",
+      "title": "Atelier & Commercial Loft",
+      "slug": "atelier-commercial-loft",
+      "category": "Commercial",
+      "location": "Orchard Road",
+      "propertyType": "Boutique Creative Studio",
+      "style": "Industrial Luxe",
+      "coverImage": "/images/services/commercial.webp",
+      "galleryImages": [
+        "/images/services/commercial.webp",
+        "/images/hero/hero-2.webp"
+      ],
+      "year": "2025",
+      "area": "2,600 sqft",
+      "shortDescription": "Modular timber acoustic pods, integrated presentation walls, and a welcoming hospitality bar.",
+      "description": "Modular timber acoustic pods, integrated presentation walls, and a welcoming hospitality bar designed for client gatherings and creative collaboration.",
+      "client": "Venture Capital Atelier",
+      "featured": false,
+      "status": "published",
+      "createdAt": "2025-01-08T13:10:00.000Z",
+      "updatedAt": "2025-01-08T13:10:00.000Z"
+    },
+    {
+      "id": "coronation-sanctuary",
+      "title": "Coronation Sanctuary",
+      "slug": "coronation-sanctuary",
+      "category": "Landed",
+      "location": "Coronation Road West",
+      "propertyType": "Good Class Bungalow",
+      "style": "Timeless Monolithic",
+      "coverImage": "/images/residences/landed-1.webp",
+      "galleryImages": [
+        "/images/residences/landed-1.webp",
+        "/images/portfolio/project-2.webp"
+      ],
+      "year": "2025",
+      "area": "6,800 sqft",
+      "shortDescription": "Monolithic stone islands, concealed automated glass sliders, and tranquil water feature vistas.",
+      "description": "A masterclass in indoor-outdoor fluidity featuring monolithic stone islands, concealed automated glass sliders, and tranquil water feature vistas. Designed for multi-generational living.",
+      "client": "Dr. & Mrs. Low",
+      "featured": true,
+      "status": "published",
+      "createdAt": "2025-02-28T17:00:00.000Z",
+      "updatedAt": "2025-02-28T17:00:00.000Z"
+    }
+  ]
+}

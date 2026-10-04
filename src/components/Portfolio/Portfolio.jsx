@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
 import { projectsData } from '../../data/projects';
@@ -8,9 +8,25 @@ import './Portfolio.css';
 const Portfolio = () => {
   const sectionRef = useRef(null);
   const itemsRef = useRef([]);
+  const [projects, setProjects] = useState(projectsData.slice(0, 4));
 
-  // Curated 4 featured projects for the Home section
-  const featuredProjects = projectsData.slice(0, 4);
+  useEffect(() => {
+    fetch('/api/projects')
+      .then((res) => {
+        if (!res.ok) throw new Error('API unavailable');
+        return res.json();
+      })
+      .then((data) => {
+        if (data.projects && data.projects.length > 0) {
+          // Prioritize featured projects first, then take 4
+          const sorted = data.projects.slice().sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+          setProjects(sorted.slice(0, 4));
+        }
+      })
+      .catch((err) => {
+        console.warn('Using default featured projects:', err);
+      });
+  }, []);
 
   useEffect(() => {
     if (itemsRef.current.length > 0) {
@@ -20,7 +36,7 @@ const Portfolio = () => {
         y: 45
       });
     }
-  }, []);
+  }, [projects]);
 
   return (
     <section className="portfolio-section" ref={sectionRef} id="portfolio-section">
@@ -46,8 +62,11 @@ const Portfolio = () => {
 
         {/* Editorial Asymmetric Grid */}
         <div className="portfolio-editorial-grid">
-          {featuredProjects.map((project, index) => {
+          {projects.map((project, index) => {
             const isWide = index === 0 || index === 3;
+            const imageSrc = project.coverImage || project.image || '/images/portfolio/project-1.webp';
+            const projectLink = `/projects/${project.slug || project.id}`;
+
             return (
               <div
                 key={project.id}
@@ -56,7 +75,7 @@ const Portfolio = () => {
               >
                 <div className="portfolio-media-wrapper">
                   <img
-                    src={project.image}
+                    src={imageSrc}
                     alt={project.title}
                     className="portfolio-card-img"
                     loading="lazy"
@@ -68,7 +87,7 @@ const Portfolio = () => {
 
                   {/* Corner Action Arrow */}
                   <Link
-                    to="/portfolio"
+                    to={projectLink}
                     className="portfolio-action-circle"
                     aria-label={`View ${project.title}`}
                   >
@@ -79,17 +98,23 @@ const Portfolio = () => {
                 <div className="portfolio-card-body">
                   <div className="portfolio-card-meta">
                     <span className="portfolio-loc">{project.location}</span>
-                    <span className="portfolio-dot">•</span>
-                    <span className="portfolio-style">{project.style}</span>
+                    {project.style && (
+                      <>
+                        <span className="portfolio-dot">•</span>
+                        <span className="portfolio-style">{project.style}</span>
+                      </>
+                    )}
                   </div>
 
                   <h3 className="portfolio-card-title">
-                    <Link to="/portfolio" className="portfolio-title-link">
+                    <Link to={projectLink} className="portfolio-title-link">
                       {project.title}
                     </Link>
                   </h3>
 
-                  <p className="portfolio-card-desc">{project.description}</p>
+                  <p className="portfolio-card-desc">
+                    {project.shortDescription || project.description}
+                  </p>
                 </div>
               </div>
             );
